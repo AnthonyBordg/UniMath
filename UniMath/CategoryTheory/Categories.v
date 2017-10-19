@@ -10,26 +10,25 @@ january 2013
 
 (** **********************************************************
 
-Contents :  Definition of
-		Precategories,
-	        Categories (aka saturated precategories)
-                Setcategories
+Contents :
+- precategories: homs are arbitrary types [precategory]
+- categories: hom-types are sets [category]
+- univalent categories: [idtoiso] is an equivalence
+   [univalent_category]
+- set-categories: objects and morphisms are sets [setcategory]
+- isomorphisms: [iso], [isiso f := isweq (precomp_with f)]
+- various lemmas:
+  - uniqueness of inverse, composition etc.
+  - stability under composition
+  - Analogue to [gradth]: [is_iso_qinv]
 
-                Isomorphisms I: [iso]
-                  Definition: [isiso f := isweq (precomp_with f)]
-                  various lemmas:
-                    uniqueness of inverse, composition etc.
-                    stability under composition
-                  Analogue to [gradth]: [is_iso_qinv]
-
-                Isomorphisms II: [z_iso]
-                  Definition: [is_z_iso f := ∑ g, ...]
-                  Relationship between [z_iso] and [iso]
-
-                Categories have groupoid as objects
-
-                Many lemmas about [idtoiso], [isotoid],
-                   interplay with composition, transport etc.
+- Alternative definition of isomorphisms: [z_iso]
+  - Definition: [is_z_iso f := ∑ g, ...]
+  - Relationship between [z_iso] and [iso]
+- Univalent categories have groupoid as objects
+  [univalent_category_has_groupoid_ob]
+- Many lemmas about [idtoiso], [isotoid],
+  interplay with composition, transport etc.
 
 
 ************************************************************)
@@ -291,7 +290,7 @@ Proof.
   exact (identity a).
 Defined.
 
-Lemma cancel_postcomposition (C : precategory_data) (a b c: C)
+Lemma cancel_postcomposition {C : precategory_data} {a b c: C}
    (f f' : a --> b) (g : b --> c) : f = f' -> f · g = f' · g.
 Proof.
   intro H.
@@ -1383,6 +1382,15 @@ Proof.
   rewrite id_left.
   apply idpath.
 Qed.
+
+Lemma forall_isotoid (A : precategory) (a_is : is_univalent A)
+      (a a' : A) (P : iso a a' -> UU) :
+  (∏ e, P (idtoiso e)) → ∏ i, P i.
+Proof.
+  intros H i.
+  rewrite <- (idtoiso_isotoid _ a_is).
+  apply H.
+Defined.
 
 Lemma transportf_isotoid_dep' (J : UU) (C : precategory) (F : J -> C)
   (a a' : C) (p : a = a') (f : ∏ c, a --> F c) :

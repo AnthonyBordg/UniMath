@@ -29,7 +29,7 @@ Require Import UniMath.CategoryTheory.limits.terminal.
 Require Import UniMath.CategoryTheory.FunctorAlgebras.
 Require Import UniMath.CategoryTheory.exponentials.
 Require Import UniMath.CategoryTheory.whiskering.
-Require Import UniMath.CategoryTheory.Monads.
+Require Import UniMath.CategoryTheory.Monads.Monads.
 
 Require Import UniMath.SubstitutionSystems.Signatures.
 Require Import UniMath.SubstitutionSystems.SumOfSignatures.
@@ -174,7 +174,7 @@ eapply pathscomp0.
   eapply maponpaths, BinCoproductOfArrowsIn2.
 rewrite assoc.
 eapply pathscomp0.
-  eapply cancel_postcomposition, cancel_postcomposition.
+  eapply @cancel_postcomposition. eapply @cancel_postcomposition.
   apply (CoproductOfArrowsIn _ _ (Coproducts_functor_precat _ _ _
           (CoproductsHSET _ isasetbool)
           _ (λ i, pr1 (Arity_to_Signature has_homsets_HSET BinProductsHSET
@@ -204,7 +204,7 @@ eapply pathscomp0.
   eapply maponpaths, BinCoproductOfArrowsIn2.
 rewrite assoc.
 eapply pathscomp0.
-  eapply cancel_postcomposition, cancel_postcomposition.
+  eapply @cancel_postcomposition, @cancel_postcomposition.
   apply (CoproductOfArrowsIn _ _ (Coproducts_functor_precat _ _ _
           (CoproductsHSET _ isasetbool)
           _ (λ i, pr1 (Arity_to_Signature has_homsets_HSET BinProductsHSET
